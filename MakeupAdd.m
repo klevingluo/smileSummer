@@ -3,9 +3,10 @@ clc;
 clear;
 
 % Load input image and example image
-input = 'example.jpg';
-example = 'obama.jpg';
+input = 'input.jpg';
+example = 'example.jpg';
 
+%
 [inMarkx inMarky] = getLandmark(input);
 subplot(2,2,1)
 imshow(input);
@@ -29,8 +30,6 @@ interp.radius = 5; % radius or median filter dimension
 interp.power = 2; %power for inverse wwighting interpolation method
 
 imgIn = imread(example);
-
-load('map.mat'); % load map
 
 img2 = imread(input);
 [img_height img_width scrap] = size(img2);
