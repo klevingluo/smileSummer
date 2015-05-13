@@ -1,103 +1,52 @@
 % Applies the makeup of example.jpg to input.jpg
-
-clc; clear;
-
-% Load input your API_KEY & API_SECRET
-API_KEY = '3e6bf2228704f676d98a3a4a086492f3';
-API_SECRET = 'k7shsPGa3Jx2cN0-T_jEIbxrIN3J4zoV';
+clc;
+clear;
 
 % Load input image and example image
-input = 'input.jpg';
-example = 'example.jpg';
+input = 'example.jpg';
+example = 'obama.jpg';
 
-% Loads API
-api = facepp(API_KEY, API_SECRET, 'US');
-
-% Detect faces in the image, obtain related information (faces, img_id, img_height, 
-% img_width, session_id, url, attributes)
-rst = detect_file(api, input, 'all');
-face = rst{1}.face;
-img_width1 = rst{1}.img_width;
-img_height1 = rst{1}.img_height;
-
-inface = face{1};
-inputMarks = api.landmark(inface.face_id, '83p');
-inputMarks = inputMarks{1}.result{1}.landmark;
-
-fields = fieldnames(inputMarks);
-inMarkx = zeros(1,83);
-inMarky = zeros(1,83);
-for i = 1:numel(fields);
-  inMarkx(i) = inputMarks.(fields{i}).x;
-  inMarky(i) = inputMarks.(fields{i}).y;
-end
-
-figure(2);
-% drawing the face 1
-subplot(1,2,1);
-im = imread(input);
-imshow(im);
+[inMarkx inMarky] = getLandmark(input);
+subplot(2,2,1)
+imshow(input);
 hold on;
-for i = 1 : length(face)
-    % Detect facial key points
-    face_i = face{i};
-    rst2 = api.landmark(face_i.face_id, '83p');
-    landmark_points = rst2{1}.result{1}.landmark;
-    landmark_names = fieldnames(landmark_points);
-    
-    % Draw facial key points
-    for j = 1 : length(landmark_names)
-        pt = getfield(landmark_points, landmark_names{j});
-        scatter(pt.x * img_width1 / 100, pt.y * img_height1 / 100, 'g.');
-    end
+% Draw facial key points
+for j = 1 : length(inMarkx)
+   scatter(inMarkx(j), inMarky(j), 'g.');
 end
 
-% Detect faces in the image, obtain related information (faces, img_id, img_height, 
-% img_width, session_id, url, attributes)
-rst = detect_file(api, example, 'all');
-img_width = rst{1}.img_width;
-img_height = rst{1}.img_height;
-face = rst{1}.face;
-
-exface = face{1};
-exMarks = api.landmark(exface.face_id, '83p');
-exMarks = exMarks{1}.result{1}.landmark;
-
-exMarkx = zeros(1,83);
-exMarky = zeros(1,83);
-for i = 1:numel(fields);
-  exMarkx(i) = exMarks.(fields{i}).x;
-  exMarky(i) = exMarks.(fields{i}).y;
-end
-
-subplot(1,2,2);
-% draw the other face
-im = imread(example);
-imshow(im);
+[exMarkx exMarky] = getLandmark(example);
+% Draw facial key points
+subplot(2,2,3)
+imshow(example);
 hold on;
-for i = 1 : length(face)
-    % Detect facial key points
-    face_i = face{i};
-    rst2 = api.landmark(face_i.face_id, '83p');
-    landmark_points = rst2{1}.result{1}.landmark;
-    landmark_names = fieldnames(landmark_points);
-    
-    % Draw facial key points
-    for j = 1 : length(landmark_names)
-        pt = getfield(landmark_points, landmark_names{j});
-        scatter(pt.x * img_width / 100, pt.y * img_height / 100, 'g.');
-    end
+for i = 1 : length(exMarkx)
+   scatter(exMarkx(i), exMarky(i), 'g.');
 end
 
-interp.method = 'invdist';
-interp.radius = 5;
-interp.power = 2;
+interp.method = 'invdist'; %'nearest'; %'none' % interpolation method
+interp.radius = 5; % radius or median filter dimension
+interp.power = 2; %power for inverse wwighting interpolation method
 
-Xp = exMarky * img_width1 / 100;
-Yp = exMarkx * img_width1 / 100;
-Xs = inMarky * img_width1 / 100;
-Ys = inMarkx * img_width1 / 100;
+imgIn = imread(example);
 
-save('cods.mat', 'Xp', 'Xs', 'Yp', 'Ys');
-tpsWarpDemo('example.jpg','map.mat','cods.mat')
+load('map.mat'); % load map
 
+img2 = imread(input);
+[img_height img_width scrap] = size(img2);
+
+%% Warping
+[imgW, imgWr]  = tpswarp(imgIn,[img_width img_height],[exMarky exMarkx],[inMarky inMarkx],interp); % thin plate spline warping
+imgW = uint8(imgW);
+
+subplot(2,2,4); 
+imshow(imgW);
+
+subplot(2,2,2); 
+% img_width, session_id, url, attributes)
+imshow(imgW)
+hold on;
+% Draw facial key points
+for j = 1 : length(inMarkx)
+   scatter(inMarkx(j), inMarky(j), 'g.');
+end
