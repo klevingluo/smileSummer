@@ -1,4 +1,4 @@
-function [Xp Yp] = getLandmark(img)
+function [img1 img2] = faceWarp(img)
 % Uses the face++ api to get an ordered list of the landmarks of the face
 % indicated by the filename 'img'
 %
