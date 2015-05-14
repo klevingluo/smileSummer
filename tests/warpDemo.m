@@ -1,9 +1,10 @@
+%% talking to face++
 % facial warping demo
 clc;
 clear;
 
 % Load input image and example image
-input = 'input.jpg';
+input = 'example.jpg';
 example = 'swift.jpg';
 
 [inMarkx, inMarky] = getLandmark(input);
