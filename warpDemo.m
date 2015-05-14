@@ -1,10 +1,10 @@
-% Applies the makeup of example.jpg to input.jpg
+% facial warping demo
 clc;
 clear;
 
 % Load input image and example image
 input = 'input.jpg';
-example = 'demo.jpg';
+example = 'swift.jpg';
 
 [inMarkx, inMarky] = getLandmark(input);
 subplot(2,2,1)
