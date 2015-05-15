@@ -4,7 +4,7 @@
 clc;
 clear;
 
-img = imread('demo.jpg');
+img = imread('colors.jpg');
 
 l = getLayers(img);
 
