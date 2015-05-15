@@ -1,6 +1,5 @@
 img = imread('obama.jpg');
 
-
 % degree of smoothing to use for the guided smooth
 DOS = 500;
 

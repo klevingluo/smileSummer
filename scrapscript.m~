@@ -1,0 +1,23 @@
+
+
+%[Xp, Yp] = getLandmark('obama.jpg');
+
+%% points acquired
+
+figure(1);
+img = imread('obama.jpg');
+
+cthings=[37,49,48,54,51,52,46,53,47,50]
+
+mouthpoints = [cthings+1];
+len = length(mouthpoints);
+mouthx = zeros(1,len);
+mouthy = zeros(1,len);
+
+for i=1:len
+    mouthx(i) = Xp(mouthpoints(i));
+    mouthy(i) = Yp(mouthpoints(i));
+end
+
+mouth = cropPolygon(img, mouthx, mouthy);
+imshow(mouth);

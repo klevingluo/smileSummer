@@ -1,7 +1,11 @@
-img = imread('obama.jpg');
 
-Px = [0 300 300 150 0];
-Py = [0 0 300 150 300];
+%[Xp, Yp] = getLandmark('swift.jpg');
 
-crop = cropPolygon(img, Px, Py);
-imshow(crop);
+%% points acquired
+
+figure(1);
+img = imread('swift.jpg');
+
+face = getFeatures(img, Xp, Yp);
+
+imshow(face.mouthin);

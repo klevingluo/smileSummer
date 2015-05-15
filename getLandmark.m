@@ -1,4 +1,4 @@
-function [Xp Yp] = getLandmark(img)
+function [Xp, Yp] = getLandmark(img)
 % Uses the face++ api to get an ordered list of the landmarks of the face
 % indicated by the filename 'img'
 %
@@ -8,6 +8,7 @@ function [Xp Yp] = getLandmark(img)
 % Output:
 % Xp - the x-coordinates of the facial landmarks in order
 % Yp - the y-coordinates of the facial landmarks in order
+% Landmarks - the
 
 % Loads the Api with keys
 API_KEY = '3e6bf2228704f676d98a3a4a086492f3';

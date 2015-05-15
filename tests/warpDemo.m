@@ -5,7 +5,7 @@ clear;
 
 % Load input image and example image
 input = 'example.jpg';
-example = 'swift.jpg';
+example = 'obama.jpg';
 
 [inMarkx, inMarky] = getLandmark(input);
 subplot(2,2,1)
@@ -48,4 +48,12 @@ hold on;
 % Draw facial key points
 for j = 1 : length(inMarkx)
    scatter(inMarkx(j), inMarky(j), 'g.');
+end
+
+figure(2);
+subplot(1,1,1);
+imshow(example);
+hold on;
+for i = 1 : length(exMarkx)
+   scatter(exMarkx(i), exMarky(i), 'g.');
 end
