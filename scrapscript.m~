@@ -1,23 +1,13 @@
-
-
-%[Xp, Yp] = getLandmark('obama.jpg');
-
-%% points acquired
-
 figure(1);
-img = imread('obama.jpg');
+input = 'input.jpg';
+example = 'example.jpg';
 
-cthings=[37,49,48,54,51,52,46,53,47,50]
+template = getLayers(warpFace(input, example));
+face = getLayers(imread('input.jpg'));
 
-mouthpoints = [cthings+1];
-len = length(mouthpoints);
-mouthx = zeros(1,len);
-mouthy = zeros(1,len);
+imshow(template.lightness);
 
-for i=1:len
-    mouthx(i) = Xp(mouthpoints(i));
-    mouthy(i) = Yp(mouthpoints(i));
-end
+detail = 0.2* rgb2lab(template.detail) + 0.7 * rgb2lab(face.detail);
+shape = 0.2* rgb2lab(template.shape) + 0.7 * rgb2lab(face.shape);
 
-mouth = cropPolygon(img, mouthx, mouthy);
-imshow(mouth);
+imshow(detail + shape + rgb2lab);

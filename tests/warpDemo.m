@@ -4,7 +4,7 @@ clc;
 clear;
 
 % Load input image and example image
-input = 'example.jpg';
+input = 'input.jpg';
 example = 'obama.jpg';
 
 [inMarkx, inMarky] = getLandmark(input);
