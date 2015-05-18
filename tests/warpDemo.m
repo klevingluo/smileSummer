@@ -5,7 +5,7 @@ clear;
 
 % Load input image and example image
 input = 'input.jpg';
-example = 'obama.jpg';
+example = 'example2.jpg';
 
 [inMarkx, inMarky] = getLandmark(input);
 subplot(2,2,1)
@@ -50,7 +50,7 @@ for j = 1 : length(inMarkx)
    scatter(inMarkx(j), inMarky(j), 'g.');
 end
 
-figure(2);
+figure(10);
 subplot(1,1,1);
 imshow(example);
 hold on;
