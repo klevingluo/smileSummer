@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+   <name>Training faces</name>
+   <comment>These faces recognized by face++</comment>
+   <images>
+      <image file="1.jpg">
+         <box height="199" left="25" top="107" width="199"/>
+      </image>
+      <image file="4.jpg">
+         <box height="191" left="53" top="55" width="191"/>
+      </image>
+   </images>
+</dataset>
